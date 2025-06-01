@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'watch_now' => 'Watch Now',
+    'add_to_list' => 'Add to List',
+    'popular_movies' => 'Popular Movies',
+    'recently_added' => 'Recently Added',
+    'trending_now' => 'Trending Now',
+    'categories' => 'Categories',
+    'view_all' => 'View All',
+    'continue_watching' => 'Continue Watching',
+    'search_placeholder' => 'Search for movies...',
+    'filter_button' => 'Filter',
+    
+    // New keys
+    'featured_movie' => 'Featured Movie',
+    'featured_movie_description_placeholder' => 'An epic journey through uncharted territories. Experience the adventure of a lifetime.',
+    'genre_action' => 'Action',
+    'genre_comedy' => 'Comedy',
+    'genre_romance' => 'Romance',
+    'genre_horror' => 'Horror',
+    'genre_sci_fi' => 'Sci-Fi',
+    'genre_drama' => 'Drama',
+    'genre_thriller' => 'Thriller',
+    'genre_fantasy' => 'Fantasy',
+    'genre_adventure' => 'Adventure',
+    'filter_all' => 'All',
+    'about_cineplex_title' => 'About Cineplex',
+    'about_cineplex_description' => 'Your ultimate destination for movies and entertainment.',
+    'quick_links_title' => 'Quick Links',
+    'nav_home' => 'Home',
+    'nav_movies' => 'Movies',
+    'nav_theaters' => 'Theaters',
+    'nav_promotions' => 'Promotions',
+    'nav_contact' => 'Contact',
+    'connect_with_us_title' => 'Connect With Us',
+]; 
