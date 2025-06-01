@@ -45,7 +45,7 @@
                         url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            height: 600px;
+            height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -56,6 +56,7 @@
             border-radius: 50px;
             font-weight: bold;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary {
@@ -67,7 +68,12 @@
             background-color: #ff0f1a;
             border-color: #ff0f1a;
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(var(--primary-color), 0.4);
+            box-shadow: 0 8px 16px rgba(var(--primary-color), 0.4);
+        }
+
+        .btn-primary:active {
+             transform: translateY(0);
+             box-shadow: 0 4px 8px rgba(var(--primary-color), 0.3);
         }
 
         .btn-outline-light {
@@ -80,7 +86,12 @@
             background-color: var(--text-color);
             border-color: var(--text-color);
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline-light:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.15);
         }
 
         .movie-card {
@@ -116,9 +127,65 @@
         }
 
         footer {
-            background-color: #000;
-            padding: 2rem 0;
-            margin-top: 3rem;
+            background-color: #0a0a0a;
+            padding: 3rem 0 1.5rem 0;
+            margin-top: 4rem;
+            color: #b3b3b3;
+            border-top: 1px solid #222;
+            text-align: center;
+        }
+
+        footer .container {
+            border-bottom: 1px solid #222;
+            padding-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        footer h5 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        footer ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        footer ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        footer a {
+            color: #b3b3b3;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links a {
+            font-size: 1.6rem;
+            margin: 0 0.8rem;
+            color: #b3b3b3;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Copyright style */
+        .copyright {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 1.5rem;
         }
 
         /* Custom Styles for Home Page Effects */
@@ -207,30 +274,33 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3 mb-md-0">
                     <h5 class="text-white">{{ __('messages.about_cineplex_title') }}</h5>
-                    <p class="text-muted">{{ __('messages.about_cineplex_description') }}</p>
+                    <p>{{ __('messages.about_cineplex_description') }}</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3 mb-md-0">
                     <h5 class="text-white">{{ __('messages.quick_links_title') }}</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('movies.index') }}" class="text-muted">{{ __('messages.nav_movies') }}</a></li>
-                        <li><a href="#" class="text-muted">{{ __('messages.categories') }}</a></li>
-                        <li><a href="#" class="text-muted">{{ __('messages.trending_now') }}</a></li>
-                        <li><a href="#" class="text-muted">{{ __('messages.recently_added') }}</a></li>
-                        <li><a href="#" class="text-muted">{{ __('messages.nav_contact') }}</a></li>
+                        <li><a href="{{ route('movies.index') }}">{{ __('messages.nav_movies') }}</a></li>
+                        <li><a href="#">{{ __('messages.categories') }}</a></li>
+                        <li><a href="#">{{ __('messages.trending_now') }}</a></li>
+                        <li><a href="#">{{ __('messages.recently_added') }}</a></li>
+                        <li><a href="#">{{ __('messages.nav_contact') }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h5 class="text-white">{{ __('messages.connect_with_us_title') }}</h5>
                     <div class="social-links">
-                        <a href="#" class="text-muted me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-muted me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-muted me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-muted"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="text-center copyright">
+            &copy; {{ date('Y') }} Cineplex. All rights reserved.
         </div>
     </footer>
 
