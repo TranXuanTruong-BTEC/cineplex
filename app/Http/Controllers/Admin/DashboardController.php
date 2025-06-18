@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use App\Models\Category;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,6 +14,7 @@ class DashboardController extends Controller
     {
         $totalMovies = Movie::count();
         $totalCategories = Category::count();
+        $totalGenres = Genre::count();
         $totalViews = Movie::sum('views');
         $newToday = Movie::whereDate('created_at', today())->count();
 
@@ -34,6 +36,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact(
             'totalMovies',
             'totalCategories',
+            'totalGenres',
             'totalViews',
             'newToday',
             'recentMovies',

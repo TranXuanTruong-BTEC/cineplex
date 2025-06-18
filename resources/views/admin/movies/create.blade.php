@@ -47,20 +47,27 @@
                                class="form-control @error('thumbnail') is-invalid @enderror" 
                                id="thumbnail" 
                                name="thumbnail" 
+                               accept="image/*"
                                required>
+                        <div class="form-text">Chấp nhận: JPG, PNG, GIF, SVG. Tối đa 2MB.</div>
                         @error('thumbnail')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="video_url" class="form-label">URL Video <span class="text-danger">*</span></label>
-                        <input type="url" 
+                        <label for="video_url" class="form-label">YouTube Video URL hoặc Video ID <span class="text-danger">*</span></label>
+                        <input type="text" 
                                class="form-control @error('video_url') is-invalid @enderror" 
                                id="video_url" 
                                name="video_url" 
                                value="{{ old('video_url') }}" 
+                               placeholder="https://www.youtube.com/watch?v=VIDEO_ID hoặc VIDEO_ID"
                                required>
+                        <div class="form-text">
+                            Có thể nhập URL YouTube đầy đủ hoặc chỉ Video ID (11 ký tự).<br>
+                            Ví dụ: https://www.youtube.com/watch?v=dQw4w9WgXcQ hoặc dQw4w9WgXcQ
+                        </div>
                         @error('video_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -68,13 +75,14 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="duration" class="form-label">Thời lượng (ví dụ: 1h 30m) <span class="text-danger">*</span></label>
+                            <label for="duration" class="form-label">Thời lượng (tự động lấy từ YouTube)</label>
                             <input type="text" 
                                    class="form-control @error('duration') is-invalid @enderror" 
                                    id="duration" 
                                    name="duration" 
                                    value="{{ old('duration') }}" 
-                                   required>
+                                   placeholder="1h 30m"
+                                   readonly>
                             @error('duration')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -127,6 +135,18 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="genres" class="form-label">Thể loại</label>
+                        <select class="form-select" id="genres" name="genres[]" multiple>
+                            @foreach($genres as $genre)
+                                <option value="{{ $genre->id }}" {{ in_array($genre->id, old('genres', [])) ? 'selected' : '' }}>
+                                    {{ $genre->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="form-text">Chọn một hoặc nhiều thể loại phù hợp với phim.</div>
+                    </div>
+
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Lưu phim
@@ -136,4 +156,66 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    let ytPlayer;
+    let pendingVideoId = null;
+    let ytReady = false;
+
+    function onYouTubeIframeAPIReady() {
+        ytReady = true;
+        if (pendingVideoId) {
+            loadYoutubeDuration(pendingVideoId);
+            pendingVideoId = null;
+        }
+    }
+
+    function loadYoutubeDuration(videoId) {
+        if (!ytReady) {
+            pendingVideoId = videoId;
+            return;
+        }
+        if (ytPlayer) ytPlayer.destroy();
+        ytPlayer = new YT.Player('hidden-yt-player', {
+            height: '0', width: '0', videoId: videoId,
+            events: {
+                'onReady': function(event) {
+                    var duration = event.target.getDuration();
+                    if (duration > 0) {
+                        var h = Math.floor(duration / 3600);
+                        var m = Math.floor((duration % 3600) / 60);
+                        var s = Math.floor(duration % 60);
+                        let text = '';
+                        if (h > 0) text += h + 'h ';
+                        if (m > 0) text += m + 'm ';
+                        if (h == 0 && m == 0) text += s + 's';
+                        document.getElementById('duration').value = text.trim();
+                    }
+                }
+            }
+        });
+    }
+
+    function extractYoutubeId(url) {
+        if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+        var regExp = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        var match = url.match(regExp);
+        return match ? match[1] : null;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var input = document.getElementById('video_url');
+        if (!input) return;
+        input.addEventListener('change', function() {
+            var videoId = extractYoutubeId(this.value);
+            if (videoId) {
+                loadYoutubeDuration(videoId);
+            }
+        });
+    });
+</script>
+<div id="hidden-yt-player" style="display:none"></div>
 @endsection 

@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(['admin.*', 'home'], CategoryComposer::class);
+        View::composer('*', CategoryComposer::class);
     }
 }

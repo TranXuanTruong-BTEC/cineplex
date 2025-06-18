@@ -19,4 +19,9 @@ class Category extends Model
     {
         return $this->hasMany(Movie::class);
     }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'category_genre');
+    }
 }

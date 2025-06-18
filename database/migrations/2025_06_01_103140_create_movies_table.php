@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('genre')->nullable();
-            $table->string('release_year')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('youtube_video_id', 50)->nullable();
             $table->string('duration')->nullable();
-            $table->string('image')->nullable(); // Đường dẫn đến ảnh
-            $table->string('trailer_link')->nullable(); // Link trailer
-            // Thêm các cột khác nếu cần
+            $table->integer('release_year')->nullable();
+            $table->integer('views')->default(0);
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
         });
     }

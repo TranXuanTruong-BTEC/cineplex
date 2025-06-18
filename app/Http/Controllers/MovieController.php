@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Movie;
+use App\Models\Category;
 
 class MovieController extends Controller
 {
@@ -13,8 +15,17 @@ class MovieController extends Controller
      */
     public function index()
     {
-        // Logic để lấy danh sách phim, tạm thời trả về view rỗng
-        return view('movies.index');
+        $query = Movie::with(['category', 'genres'])->where('status', 'published');
+        
+        // Filter theo danh mục nếu có
+        if (request('category')) {
+            $query->where('category_id', request('category'));
+        }
+        
+        $movies = $query->latest()->paginate(12);
+        $categories = Category::withCount('movies')->get();
+        
+        return view('movies.index', compact('movies', 'categories'));
     }
 
     /**
@@ -25,7 +36,19 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        // Logic để lấy thông tin phim theo ID, tạm thời trả về view rỗng
-        return view('movies.show', ['movieId' => $id]);
+        $movie = Movie::with(['category', 'genres'])->findOrFail($id);
+        
+        // Tăng lượt xem
+        $movie->increment('views');
+        
+        // Lấy phim liên quan (cùng danh mục)
+        $relatedMovies = Movie::with('category')
+            ->where('category_id', $movie->category_id)
+            ->where('id', '!=', $movie->id)
+            ->where('status', 'published')
+            ->take(4)
+            ->get();
+            
+        return view('movies.show', compact('movie', 'relatedMovies'));
     }
 }

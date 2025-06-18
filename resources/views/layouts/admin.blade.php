@@ -78,6 +78,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.genres.*') ? 'active' : '' }}" href="{{ route('admin.genres.index') }}">
+                            <i class="fas fa-tags"></i> Thể loại
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">
                             <i class="fas fa-home"></i> Về trang chủ
                         </a>

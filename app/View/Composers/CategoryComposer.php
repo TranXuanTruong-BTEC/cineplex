@@ -15,7 +15,7 @@ class CategoryComposer
      */
     public function compose(View $view)
     {
-        $categories = Category::all();
+        $categories = Category::withCount('movies')->get();
         $view->with('categories', $categories);
     }
 } 

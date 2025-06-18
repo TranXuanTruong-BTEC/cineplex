@@ -4,38 +4,47 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-3 mb-4">
+    <div class="col-md-2 mb-4">
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5 class="card-title">Tổng số phim</h5>
-                <p class="card-text display-4">{{ $totalMovies }}</p>
+                <p class="card-text display-6">{{ $totalMovies }}</p>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3 mb-4">
+    <div class="col-md-2 mb-4">
         <div class="card bg-success text-white">
             <div class="card-body">
                 <h5 class="card-title">Lượt xem</h5>
-                <p class="card-text display-4">{{ number_format($totalViews) }}</p>
+                <p class="card-text display-6">{{ number_format($totalViews) }}</p>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3 mb-4">
+    <div class="col-md-2 mb-4">
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">Danh mục</h5>
-                <p class="card-text display-4">{{ $totalCategories }}</p>
+                <p class="card-text display-6">{{ $totalCategories }}</p>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3 mb-4">
+    <div class="col-md-2 mb-4">
+        <div class="card bg-secondary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Thể loại</h5>
+                <p class="card-text display-6">{{ $totalGenres }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 mb-4">
         <div class="card bg-warning text-white">
             <div class="card-body">
                 <h5 class="card-title">Phim mới hôm nay</h5>
-                <p class="card-text display-4">{{ $newToday }}</p>
+                <p class="card-text display-6">{{ $newToday }}</p>
             </div>
         </div>
     </div>

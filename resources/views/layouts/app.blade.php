@@ -228,6 +228,32 @@
             color: var(--text-color) !important;
         }
 
+        /* Dropdown styles */
+        .dropdown-menu-dark {
+            background-color: rgba(0, 0, 0, 0.95);
+            border: 1px solid #333;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-item {
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            transform: translateX(5px);
+        }
+
+        .dropdown-divider {
+            border-color: #333;
+        }
+
+        .dropdown-item-text {
+            color: #777;
+        }
+
     </style>
     @yield('styles')
 </head>
@@ -246,8 +272,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('movies.index') }}">{{ __('messages.nav_movies') }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{ __('messages.categories') }}</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ __('messages.categories') }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="{{ route('movies.index') }}">
+                                <i class="fas fa-film me-2"></i>Tất cả phim
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            @forelse($categories ?? [] as $category)
+                                <li><a class="dropdown-item" href="{{ route('movies.index', ['category' => $category->id]) }}">
+                                    <i class="fas fa-tag me-2"></i>{{ $category->name }}
+                                    <span class="badge bg-primary float-end">{{ $category->movies_count }}</span>
+                                </a></li>
+                            @empty
+                                <li><span class="dropdown-item-text">Chưa có danh mục</span></li>
+                            @endforelse
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">{{ __('messages.trending_now') }}</a>
